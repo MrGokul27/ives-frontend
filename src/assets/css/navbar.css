@@ -1,0 +1,223 @@
+.lufga {
+    font-family: "Lufga", sans-serif;
+}
+
+.logo-main {
+    width: 100%;
+    max-width: 150px;
+}
+
+.navbar {
+    border-bottom: 1px solid #cccccc;
+    background-color: #fcfcfc;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000000;
+}
+
+.navbar-toggler {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border-radius: 50%;
+    transition: 0.3s ease-in-out;
+    flex-shrink: 0;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.navbar-nav input {
+    border-radius: 62px;
+    background-color: #f0f0f0;
+    font-size: 14px;
+    padding: 10px 80px 10px 40px;
+    border: none;
+}
+
+.nav-link {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 5px;
+    color: #000000;
+    text-decoration: none;
+}
+
+.nav-link.active {
+    color: #000000 !important;
+}
+
+.search-input {
+    background-color: #00000066;
+    border: none;
+    padding: 10px;
+}
+
+.search-input::placeholder {
+    color: #00000066;
+    opacity: 1;
+}
+
+.search-container {
+    position: relative;
+    display: inline-block;
+}
+
+.search-button {
+    color: #00000066;
+    position: absolute;
+    left: 15px;
+    top: 20px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 16px;
+}
+
+.search-button:focus {
+    outline: none;
+}
+
+.bi-cart,
+.fa-heart {
+    color: #192c3d;
+    font-size: 22px;
+}
+
+.navbar-nav .dropdown:hover .dropdown-menu {
+    display: block;
+    position: absolute;
+    background-color: white;
+    border-radius: 0;
+    top: 100%;
+}
+
+.dropdown-item {
+    color: #000;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #000;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.navbar-nav .dropdown-menu .active {
+    background-color: #192c3d;
+    color: #ffffff;
+}
+
+.navbar-nav .dropdown-menu .active:hover {
+    background-color: #192c3d;
+    color: #ffffff;
+}
+
+.login-btn {
+    border: 1px solid #192c3d;
+    border-radius: 8px;
+    padding: 8px 32px;
+    background-color: #fcfcfc;
+    color: #192c3d;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.signup-btn {
+    border: 1px solid #192c3d;
+    border-radius: 8px;
+    padding: 8px 32px;
+    background-color: #192c3d;
+    color: #fcfcfc;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+@media screen and (max-width: 991px) {
+    .navbar-collapse.collapse:not(.show) {
+        display: block;
+    }
+
+    .navbar-collapse {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: #212529;
+        width: 215px;
+        height: 100%;
+        z-index: 9999;
+        padding: 25px 5px;
+        transform: translateX(-215px);
+        transition: 0.5s ease-in-out;
+        display: block;
+    }
+
+    .navbar-collapse.show {
+        transform: translateX(0px);
+    }
+
+    .nav-overlay {
+        position: absolute;
+        background: #0000007d;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        transform: translateX(-100vw);
+        transition: 0.5s ease-in-out;
+        display: block;
+    }
+
+    .nav-overlay.active {
+        transform: translateX(0);
+    }
+
+    .nav-link.active {
+        color: #ffffff !important;
+    }
+
+    .nav-link {
+        color: #ffffff !important;
+        font-size: 16px;
+    }
+
+    .navbar-nav input {
+        padding: 10px 10px 10px 40px;
+    }
+
+    .navbar .nav-item-mobile {
+        margin-top: 20px;
+    }
+
+    .nav-logo-mobile {
+        display: block !important;
+    }
+
+    .cart-icon {
+        color: #ffffff !important;
+    }
+
+    .signup-btn {
+        padding: 10px 26px;
+        background-color: #ffffff;
+        color: #192c3d;
+        font-size: 18px;
+        margin-top: 15px;
+    }
+
+    .login-btn {
+        padding: 10px 34px;
+        background-color: #fcfcfc;
+        color: #192c3d;
+        font-size: 20px;
+        margin-top: 15px;
+    }
+}
