@@ -8,12 +8,17 @@ import Checkout from "./pages/Checkout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./utils/ProtectedRoute";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   return (
-    <Router>
-      <MainContent />
-    </Router>
+    <>
+      <ToastContainer />
+      <Router>
+        <MainContent />
+      </Router>
+    </>
   );
 };
 
@@ -33,7 +38,9 @@ const MainContent = () => {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
       </Routes>
     </>
   );

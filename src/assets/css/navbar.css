@@ -10,7 +10,7 @@
 .navbar {
     border-bottom: 1px solid #cccccc;
     background-color: #fcfcfc;
-    position: fixed;
+    /* position: fixed; */
     top: 0;
     left: 0;
     right: 0;

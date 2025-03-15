@@ -1,10 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.jpeg";
 import "../assets/css/navbar.css";
 
 const Navbar = () => {
     const [navOverlayActive, setNavOverlayActive] = useState(false);
+    const [user, setUser] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const updateUser = () => {
+            const storedUser = JSON.parse(localStorage.getItem("user"));
+            setUser(storedUser);
+        };
+        updateUser();
+        window.addEventListener("userUpdate", updateUser);
+        return () => {
+            window.removeEventListener("userUpdate", updateUser);
+        };
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        setUser(null);
+        window.dispatchEvent(new Event("userUpdate"));
+        navigate("/login");
+    };
 
     const handleNavOverlayClick = (event) => {
         if (event.target === event.currentTarget) {
@@ -47,117 +69,59 @@ const Navbar = () => {
                     >
                         <span className="navbar-toggler-icon"></span>
                     </button>
-                    <div
-                        className={`nav-overlay ${navOverlayActive ? "active" : ""}`}
-                        onClick={handleNavOverlayClick}
-                    ></div>
-                    <div
-                        className={`collapse navbar-collapse ${navOverlayActive ? "show" : ""
-                            }`}
-                        id="navbarSupportedContent"
-                    >
+                    <div className={`nav-overlay ${navOverlayActive ? "active" : ""}`} onClick={handleNavOverlayClick}></div>
+                    <div className={`collapse navbar-collapse ${navOverlayActive ? "show" : ""}`} id="navbarSupportedContent">
                         <div className="mx-auto">
                             <ul className="navbar-nav align-items-center">
-                                <li className="nav-item mx-3 d-none nav-logo-mobile">
-                                    <NavLink to="/" className="navbar-brand">
-                                        <img
-                                            src={logo}
-                                            alt="logo"
-                                            className="img-fluid logo-main"
-                                        />
-                                    </NavLink>
-                                </li>
-                                <li className="nav-item mx-3 nav-item-mobile">
-                                    <NavLink
-                                        to="/"
-                                        className="nav-link"
-                                        aria-current="page"
-                                        activeClassName="active"
-                                        exact
-                                    >
+                                <li className="nav-item mx-3">
+                                    <NavLink to="/" className="nav-link" aria-current="page">
                                         Home
                                     </NavLink>
                                 </li>
                                 <li className="nav-item mx-3 dropdown">
-                                    <NavLink
-                                        className="nav-link dropdown-toggle"
-                                        activeClassName="active"
-                                        id="navbarDropdown"
-                                        role="button"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                    >
+                                    <NavLink className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Shop <i className="bi bi-chevron-down"></i>
                                     </NavLink>
                                     <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li>
-                                            <NavLink to="/shop-men" className="dropdown-item" activeClassName="active">
-                                                Men
-                                            </NavLink>
-                                        </li>
-                                        <li>
-                                            <NavLink to="/shop-women" className="dropdown-item" activeClassName="active">
-                                                Women
-                                            </NavLink>
-                                        </li>
-                                        <li>
-                                            <NavLink to="/shop-accessories" className="dropdown-item" activeClassName="active">
-                                                Accessories
-                                            </NavLink>
-                                        </li>
+                                        <li><NavLink to="/shop-men" className="dropdown-item">Men</NavLink></li>
+                                        <li><NavLink to="/shop-women" className="dropdown-item">Women</NavLink></li>
+                                        <li><NavLink to="/shop-accessories" className="dropdown-item">Accessories</NavLink></li>
                                     </ul>
                                 </li>
                                 <li className="nav-item mx-3">
-                                    <NavLink
-                                        to="/contact"
-                                        className="nav-link"
-                                        activeClassName="active"
-                                    >
+                                    <NavLink to="/contact" className="nav-link">
                                         Contact Us
                                     </NavLink>
                                 </li>
-                                <li className="nav-item mx-3 mt-lg-0 mt-3">
-                                    <label className="search-container">
-                                        <input
-                                            className="form-control mr-sm-2 search-input"
-                                            type="search"
-                                            placeholder="Search for products here..."
-                                            aria-label="Search"
-                                        />
-                                        <button type="button" className="search-button border-0">
-                                            <i className="fas fa-search"></i>
-                                        </button>
-                                    </label>
-                                </li>
                             </ul>
                         </div>
-                        <div className="mx-end">
-                            <ul className="navbar-nav align-items-center">
-                                <NavLink to="/wishlist" className="nav-link mt-lg-0 mt-3" activeClassName="active">
-                                    <i className="far fa-heart me-md-2 mt-md-1"></i>
-                                </NavLink>
-                                <NavLink
-                                    to="/cart"
-                                    className="nav-link"
-                                    activeClassName="active"
-                                >
-                                    <i className="bi bi-cart me-md-3"></i>
-                                </NavLink>
-                                <NavLink
-                                    to="/login"
-                                    className="nav-link"
-                                    activeClassName="active"
-                                >
-                                    <button className="login-btn">Login</button>
-                                </NavLink>
-                                <NavLink
-                                    to="/register"
-                                    className="nav-link"
-                                    activeClassName="active"
-                                >
-                                    <button className="signup-btn me-xl-5">Sign Up</button>
-                                </NavLink>
-                            </ul>
+                        <div className="mx-end d-flex align-items-center">
+                            <NavLink to="/wishlist" className="nav-link">
+                                <i className="far fa-heart me-md-4 mt-md-1"></i>
+                            </NavLink>
+                            <NavLink to="/cart" className="nav-link">
+                                <i className="bi bi-cart me-md-4"></i>
+                            </NavLink>
+
+                            {user ? (
+                                <div className="d-flex align-items-center">
+                                    <span className="nav-link me-3">
+                                        <i className="bi bi-person-circle"></i> {user.name}
+                                    </span>
+                                    <button className="logout-btn btn btn-danger" onClick={handleLogout}>
+                                        Logout
+                                    </button>
+                                </div>
+                            ) : (
+                                <>
+                                    <NavLink to="/login" className="nav-link">
+                                        <button className="login-btn me-3">Login</button>
+                                    </NavLink>
+                                    <NavLink to="/register" className="nav-link">
+                                        <button className="signup-btn">Sign Up</button>
+                                    </NavLink>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
